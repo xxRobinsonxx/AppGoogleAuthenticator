@@ -32,7 +32,7 @@ export function verifySetupToken(user: User, token: string): boolean {
     secret: user.totpSecret,
     encoding: 'base32',
     token,
-    window: 1,
+    window: 20,
   });
 }
 

@@ -23,7 +23,12 @@ export async function verify2FASetup(req: Request, res: Response) {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
+    console.log('📥 verify-2fa-setup', { userId, token, secret: user?.totpSecret });
+
     const valid = authService.verifySetupToken(user, token);
+
+    console.log('✅ valid?', valid);
+
     if (!valid) return res.status(400).json({ error: 'Invalid token' });
 
     res.json({ success: true });
